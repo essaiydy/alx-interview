@@ -1,20 +1,23 @@
 #!/usr/bin/python3
-"""Making Change Problem"""
+"""make change methods"""
+from typing import List
 
 
-def make_change(coins, total):
-    """Determines the fewest number of coins needed \
-        to meet a given amount total"""
+def makeChange(coins: List[int], total: int) -> int:
+    """
+    fewest number of coins needed to meet total
+    Args:
+        coins <List[int]>: list of the values coins.
+        total <int>: total number.
+    Return <int>:
+        The minimum number of coins.
+    """
     if total <= 0:
         return 0
-
-    current_total = 0
-    used_coins = 0
-    coins = sorted(coins, reverse=True)
+    count = 0
+    coins.sort(reverse=True)
     for coin in coins:
-        r = (total - current_total) // coin
-        current_total += r * coin
-        used_coins += r
-        if current_total == total:
-            return used_coins
-    return -1
+        while coin <= total:
+            total -= coin
+            count += 1
+    return count if not total else -1
